@@ -56,10 +56,11 @@ docker-compose exec django python manage.py import_data
 GET /api/search/?q={nom}&fuzzy={true|false}
 ```
 Paramètres :
-
+```bash
 q : Nom à rechercher (obligatoire)
 
-fuzzy : Active la recherche approximative 
+fuzzy : Active la recherche approximative
+```
 ```bash
 Exemple de réponse :
 {{
