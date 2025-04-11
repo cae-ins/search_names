@@ -50,7 +50,7 @@ docker-compose exec django python manage.py migrate
 
 # Importer les données initiales
 docker-compose exec django python manage.py import_data
-
+```
 # Documentation API
 GET /api/search/?q={nom}&fuzzy={true|false}
 
