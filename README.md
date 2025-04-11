@@ -52,14 +52,15 @@ docker-compose exec django python manage.py migrate
 docker-compose exec django python manage.py import_data
 ```
 # Documentation API
+```bash
 GET /api/search/?q={nom}&fuzzy={true|false}
-
+```
 Paramètres :
 
 q : Nom à rechercher (obligatoire)
 
 fuzzy : Active la recherche approximative 
-
+```bash
 Exemple de réponse :
 {{
   "nom": "Kouadio",
@@ -71,8 +72,9 @@ Exemple de réponse :
     "...": "..."
   }
 }
-
+```
  # Schémas des Données
+ ```bash
 {{
   "Nom": {
     "type": "string",
@@ -87,7 +89,7 @@ Exemple de réponse :
     "nombre_femme_prenom": "integer",
     "nombre_femme_nom_famille": "integer"
   }
-
+```
 
 # 📬 Contact
 Pour toute question ou support :
