@@ -1,0 +1,8 @@
+# Ignorer les fichiers de données dans tous les dossiers
+**/*.csv
+**/*.parquet
+**/*.parq
+**/*.pq
+**/*.dta
+**/*.sav
+**/*.dta.gz
