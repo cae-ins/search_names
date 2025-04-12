@@ -2,7 +2,6 @@
 
 [![Django](https://img.shields.io/badge/Django-4.2-brightgreen)](https://www.djangoproject.com/)
 [![Docker](https://img.shields.io/badge/Docker-24.0-blue)](https://www.docker.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)](https://www.postgresql.org/)
 [![ElasticSearch](https://img.shields.io/badge/ElasticSearch-8.8-orange)](https://www.elastic.co/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
