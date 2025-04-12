@@ -95,8 +95,6 @@ Exemple de réponse :
 # 📬 Contact
 Pour toute question ou support :
 
-Responsable Technique : j.migone@stat.plan.gouv.ci
-
 Équipe : DataLab ANStat
 
 Site Web : https://www.anstat.ci
