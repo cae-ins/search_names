@@ -25,7 +25,7 @@ API de recherche de noms basée sur les données du recensement ivoirien 2021, p
 |-------------------------|--------------------------------------|
 | **Backend**             | Django 4.2 + Django REST Framework   |
 | **Moteur de recherche** | ElasticSearch 8.8                    |
-| **Infrastructure**      | Docker + Nginx                       |
+| **Infrastructure**      | Docker                      |
 | **Monitoring**          | Prometheus + Grafana (optionnel)     |
 
 ## 🚀 Démarrage Rapide
