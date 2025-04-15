@@ -1,8 +1,7 @@
-pytest
 requests
 fastapi
 uvicorn
 elasticsearch
-
-
-
+pytest==7.4.0
+black==23.7.0
+ruff==0.0.278
