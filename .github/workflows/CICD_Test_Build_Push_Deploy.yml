@@ -1,4 +1,4 @@
-name: CI/CD - Builder, Pousser & Deployer l'image sur K8s
+name: CI/CD - Builder, Pousser & Déployer l'image sur K8s
 
 on:
   push:
@@ -26,32 +26,33 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install dependencies
+      - name: Installer les dépendances
         run: |
           pip install -r requirements.txt
-          pip install pytest
+          pip install pytest httpx
 
-      - name: Tester l'API
+      - name: Lancer les tests Pytest
         run: pytest
 
-      - name: Vérifier que le tag est sur un commit de main
+      - name: Vérifier que le tag est bien sur la branche main
         run: |
           git fetch origin main --depth=1000
           BRANCH=$(git branch -r --contains ${{ github.sha }} | grep origin/main || true)
           if [ -z "$BRANCH" ]; then
-            echo "Le tag n'est pas sur un commit de main. Fin du workflow."
+            echo "Le tag n'est pas sur un commit de main. Annulation du workflow."
             exit 1
+          else
+            echo "Le tag est bien sur main, on continue..."
           fi
-        shell: bash
 
-      - name: Login to GHCR
+      - name: Connexion à GHCR
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: datalab-registry
           password: ${{ secrets.GHCR_PAT }}
 
-      - name: Builder & pousser l'image docker
+      - name: Build & Push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -60,27 +61,19 @@ jobs:
           tags: |
             ghcr.io/datalab-registry/es_api_prod3:${{ github.ref_name }}
 
-      - name: Set up kubectl
+      - name: Setup kubectl
         uses: azure/setup-kubectl@v3
         with:
-          version: 'latest'
+          version: latest
 
-      - name: Connexion à kubernetes
+      - name: Charger le kubeconfig
         run: |
           echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode > kubeconfig
-          export KUBECONFIG=$PWD/kubeconfig
+        shell: bash
 
       - name: Déployer sur Kubernetes
         run: |
+          export KUBECONFIG=$PWD/kubeconfig
           kubectl set image deployment/es-api es-api=ghcr.io/datalab-registry/es_api_prod3:${{ github.ref_name }} -n production
-
-
-
-
-
-
-
-
-
-
-
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
