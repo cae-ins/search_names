@@ -1,8 +1,6 @@
 # 🔍 Search Names API - Côte d'Ivoire Census 2021
 
-[![Django](https://img.shields.io/badge/Django-4.2-brightgreen)](https://www.djangoproject.com/)
 [![Docker](https://img.shields.io/badge/Docker-24.0-blue)](https://www.docker.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)](https://www.postgresql.org/)
 [![ElasticSearch](https://img.shields.io/badge/ElasticSearch-8.8-orange)](https://www.elastic.co/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
@@ -17,15 +15,14 @@ API de recherche de noms basée sur les données du recensement ivoirien 2021, p
   - Répartition homme/femme
 - 🤖 Suggestions automatiques de noms similaires
 - 🚀 Architecture scalable avec Docker
-- 📈 Dashboard d'administration Django
 
 ## 🛠 Stack Technique
 
 | Composant               | Technologie                          |
 |-------------------------|--------------------------------------|
-| **Backend**             | Django 4.2 + Django REST Framework   |
+| **Backend**             | FastAPI   |
 | **Moteur de recherche** | ElasticSearch 8.8                    |
-| **Infrastructure**      | Docker + Nginx                       |
+| **Infrastructure**      | Docker                      |
 | **Monitoring**          | Prometheus + Grafana (optionnel)     |
 
 ## 🚀 Démarrage Rapide
@@ -50,16 +47,18 @@ docker-compose exec django python manage.py migrate
 
 # Importer les données initiales
 docker-compose exec django python manage.py import_data
-
+```
 # Documentation API
+```bash
 GET /api/search/?q={nom}&fuzzy={true|false}
-
+```
 Paramètres :
-
+```bash
 q : Nom à rechercher (obligatoire)
 
-fuzzy : Active la recherche approximative 
-
+fuzzy : Active la recherche approximative
+```
+```bash
 Exemple de réponse :
 {{
   "nom": "Kouadio",
@@ -71,8 +70,9 @@ Exemple de réponse :
     "...": "..."
   }
 }
-
+```
  # Schémas des Données
+ ```bash
 {{
   "Nom": {
     "type": "string",
@@ -87,12 +87,10 @@ Exemple de réponse :
     "nombre_femme_prenom": "integer",
     "nombre_femme_nom_famille": "integer"
   }
-
+```
 
 # 📬 Contact
 Pour toute question ou support :
-
-Responsable Technique : j.migone@stat.plan.gouv.ci
 
 Équipe : DataLab ANStat
 
