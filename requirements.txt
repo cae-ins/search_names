@@ -6,3 +6,4 @@ elasticsearch==8.17.2
 pytest==7.4.0
 black==23.7.0
 ruff==0.0.278
+prometheus-fastapi-instrumentator==7.1.0

@@ -1,7 +1,10 @@
 from fastapi import FastAPI, Query
 from elasticsearch import Elasticsearch
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI()
+
+Instrumentator().instrument(app).expose(app)
 
 es = Elasticsearch("http://elasticsearch.elasticsearch.svc.cluster.local:9200")
 
