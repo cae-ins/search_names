@@ -1,8 +1,22 @@
 from fastapi import FastAPI, Query
 from elasticsearch import Elasticsearch
 from prometheus_fastapi_instrumentator import Instrumentator
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://192.168.1.9:90",
+        "http://192.168.1.200:80",
+        "http://site.anstat.ci:90",
+        "https://www.anstat.ci:80",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Instrumentator().instrument(app).expose(app)
 
