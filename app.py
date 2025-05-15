@@ -20,26 +20,45 @@ app.add_middleware(
 
 Instrumentator().instrument(app).expose(app)
 
-es = Elasticsearch("http://elasticsearch.elasticsearch.svc.cluster.local:9200")
+# Fonction pour instancier Elasticsearch (mockable en test)
+def get_es_client():
+
+    return Elasticsearch("http://elasticsearch.elasticsearch.svc.cluster.local:9200")
 
 @app.get("/recherche")
 def recherche_nom(nom: str = Query(..., min_length=2)):
     try:
-        # On fait une recherche exacte sur le nom
-        query = {
-            "query": {
-                "term": {
-                    "nom.keyword": nom  
+        es = get_es_client()
+
+       
+        mapping = es.indices.get_mapping(index="noms_prenoms")
+        nom_field = mapping["noms_prenoms"]["mappings"]["properties"]["nom"]
+
+        if nom_field.get("type") == "keyword":
+            query = {
+                "query": {
+                    "term": {
+                        "nom": {
+                            "value": nom
+                        }
+                    }
                 }
             }
-        }
+        else:
+            query = {
+                "query": {
+                    "match": {
+                        "nom": nom
+                    }
+                }
+            }
 
-        result = es.search(index="noms_prenoms", query=query["query"], size=100)
+        result = es.search(index="noms_prenoms", body=query, size=100)
         hits = [hit["_source"] for hit in result["hits"]["hits"]]
 
         if not hits:
             return {
-                "message": f"Aucun document trouvé pour le nom exact : '{nom}'"
+                "message": f"Aucun document trouvé pour le nom : '{nom}'"
             }
 
         return {
